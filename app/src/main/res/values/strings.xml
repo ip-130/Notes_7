@@ -4,14 +4,14 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="user">Вася Пупкин</string>
-    <string name="user_bd">Родился 01.01.1970</string>
-    <string name="menu_1_txt">Боковое меню 1</string>
-    <string name="menu_2_txt">Боковое меню 2</string>
-    <string name="menu_3_txt">Боковое меню 3</string>
-    <string name="topmenu_1_txt">Меню 1</string>
-    <string name="topmenu_3_txt">Меню 3</string>
+    <string name="user">Иван Иванов</string>
+    <string name="user_bd">Дата авторизации 12.12.2020</string>
+    <string name="menu_1_txt">Пользователи</string>
+    <string name="menu_2_txt">Настройки</string>
+    <string name="menu_3_txt">О приложении</string>
+    <string name="topmenu_3_txt">Настройки</string>
     <string name="topmenu_2_txt">Меню 2</string>
+    <string name="topmenu_1_txt">Меню 2</string>
     <string name="date_text">Дата заметки</string>
     <string name="body_text">Текст заметки</string>
     <string name="note_name_text">Имя заметки</string>

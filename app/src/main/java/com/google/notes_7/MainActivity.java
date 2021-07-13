@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Нажали 2 пункт меню", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_menu3:
-                Toast.makeText(MainActivity.this, "Нажали 3 пункт меню", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Настройки", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         initButtonNoteList();
         initButtonNoteBody();
     }
+
 
     //кнопка открыващая спискок заметок
     private void initButtonNoteList() {
@@ -154,4 +155,5 @@ public class MainActivity extends AppCompatActivity {
         //применить изменения
         fragmentTransaction.commit();
     }
+
 }
