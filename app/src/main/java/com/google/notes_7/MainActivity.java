@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.notes_7.ui.SocialNetworkFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initToolbar();
+        addFragment(SocialNetworkFragment.newInstance());
         if (savedInstanceState != null) {
             // Восстановление текущей позиции.
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
