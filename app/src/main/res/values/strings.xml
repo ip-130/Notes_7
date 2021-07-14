@@ -19,4 +19,18 @@
     <string name="note_list_btn_txt">Список</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string name="app_name_2">Social Network</string>
+    <string name="title1">Зелёный лес</string>
+    <string name="title2">Гора</string>
+    <string name="title3">Водопад</string>
+    <string name="title4">Небо</string>
+    <string name="title5">Туман</string>
+    <string name="description1">Сказочный зелёный лес</string>
+    <string name="description2">Одинокая гора</string>
+    <string name="description3">Бурный водопад в лесу</string>
+    <string name="description4">Красивое сумрачное небо</string>
+    <string name="description5">Мистический туман</string>
 </resources>
