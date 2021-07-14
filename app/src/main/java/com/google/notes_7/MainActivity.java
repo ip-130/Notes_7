@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CURRENT_NOTE = "CurrentNote";
     public Note currentNote;
-    private Navigation navigation;
-    private Publisher publisher = new Publisher();
+    public Navigation navigation;
+    public Publisher publisher = new Publisher();
 
 
     //здесь оставляем все как есть

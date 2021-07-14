@@ -19,7 +19,7 @@ import com.google.notes_7.Publisher;
 
 import java.util.Calendar;
 import java.util.Date;
-import android.R;
+import com.google.notes_7.R;
 
 public class CardFragment extends Fragment {
 
