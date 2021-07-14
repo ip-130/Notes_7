@@ -74,10 +74,10 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     // Этот класс хранит связь между данными и элементами View
     // Сложные данные могут потребовать несколько View на один пункт списка
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView title;
-        private TextView description;
-        private AppCompatImageView image;
-        private CheckBox like;
+        public TextView title;
+        public TextView description;
+        public AppCompatImageView image;
+        public CheckBox like;
 //        private TextView textView;
 
         public ViewHolder(@NonNull View itemView) {
