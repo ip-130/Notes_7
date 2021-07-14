@@ -33,4 +33,9 @@
     <string name="description3">Бурный водопад в лесу</string>
     <string name="description4">Красивое сумрачное небо</string>
     <string name="description5">Мистический туман</string>
+
+    <string name="add">Добавить</string>
+    <string name="clear">Очистить</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
 </resources>

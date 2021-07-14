@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.notes_7.CardData;
 import com.google.notes_7.CardsSource;
 import com.google.notes_7.R;
+
+import java.text.SimpleDateFormat;
 
 
 public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdapter.ViewHolder> {
@@ -22,11 +25,18 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     public OnItemClickListener itemClickListener;
     public final static String TAG = "SocialNetworkAdapter";
     public CardsSource dataSource;
+    public final Fragment fragment;
+    public int menuPosition;
 
     // Передаём в конструктор источник данных
     // В нашем случае это массив, но может быть и запрос к БД
-    public SocialNetworkAdapter(CardsSource dataSource) {
+    public SocialNetworkAdapter(CardsSource dataSource, Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
+    }
+
+    public int getMenuPosition() {
+        return menuPosition;
     }
 
     // Создать новый элемент пользовательского интерфейса
@@ -78,11 +88,18 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
         public TextView description;
         public AppCompatImageView image;
         public CheckBox like;
+        public TextView date;
 //        private TextView textView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
-//            textView = (TextView) itemView;
+            title = itemView.findViewById(R.id.title);
+            description = itemView.findViewById(R.id.description);
+            image = itemView.findViewById(R.id.imageView);
+            like = itemView.findViewById(R.id.like);
+            date = itemView.findViewById(R.id.date);
+
+            registerContextMenu(itemView);
             // Обработчик нажатий на этом ViewHolder
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,6 +109,29 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
                     }
                 }
             });
+
+            // Обработчик нажатий на картинке
+            image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    menuPosition = getLayoutPosition();
+                    itemView.showContextMenu(10, 10);
+                    return true;
+                }
+            });
+        }
+
+        private void registerContextMenu(@NonNull View itemView) {
+            if (fragment != null){
+                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        menuPosition = getLayoutPosition();
+                        return false;
+                    }
+                });
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
         public void setData(CardData cardData) {
@@ -99,11 +139,8 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
             description.setText(cardData.getDescription());
             like.setChecked(cardData.isLike());
             image.setImageResource(cardData.getPicture());
+            date.setText(new SimpleDateFormat("dd-MM-yy").format(cardData.getDate()));
         }
 
-//        public TextView getTextView() {
-//            return textView;
-//        }
-//    }
     }
 }

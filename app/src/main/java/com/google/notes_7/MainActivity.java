@@ -19,20 +19,26 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.notes_7.ui.Navigation;
 import com.google.notes_7.ui.SocialNetworkFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String CURRENT_NOTE = "CurrentNote";
     public Note currentNote;
+    private Navigation navigation;
+    private Publisher publisher = new Publisher();
+
 
     //здесь оставляем все как есть
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        navigation = new Navigation(getSupportFragmentManager());
         initToolbar();
-        addFragment(SocialNetworkFragment.newInstance());
+        getNavigation().addFragment(SocialNetworkFragment.newInstance(), false);
+//        addFragment(SocialNetworkFragment.newInstance());
         if (savedInstanceState != null) {
             // Восстановление текущей позиции.
             currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
@@ -51,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private void initToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         initDrawer(toolbar);
     }
 
@@ -125,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         buttonNoteList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFragment(new NotesListFragment());
+//                addFragment(new NotesListFragment());
             }
         });
     }
@@ -137,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (currentNote != null) { // если у нас уже выбрана заметка, и нам есть что показать
-                    addFragment(NoteDescriptionFragment.newInstance(currentNote));
+//                    addFragment(NoteDescriptionFragment.newInstance(currentNote));
                 } else { // если нечего показать(не выбрана заметка), предупреждаем пользователя
                     Toast.makeText(getApplicationContext(), "Не выбрана ни одна заметка", Toast.LENGTH_SHORT).show();
                 }
@@ -145,15 +153,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // добавляем нужный фрагмент
-    private void addFragment(Fragment fragment) {
-        //Получить менеджер фрагментов
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        // Открыть транзакцию
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //поместить нужный фрагмент в контейнер
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
-        //применить изменения
-        fragmentTransaction.commit();
+//    // добавляем нужный фрагмент
+//    private void addFragment(Fragment fragment) {
+//        //Получить менеджер фрагментов
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        // Открыть транзакцию
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        //поместить нужный фрагмент в контейнер
+//        fragmentTransaction.replace(R.id.fragment_container, fragment);
+//        //применить изменения
+//        fragmentTransaction.commit();
+//    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public Navigation getNavigation() {
+        return navigation;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
     }
 }
