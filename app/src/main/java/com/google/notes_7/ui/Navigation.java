@@ -20,7 +20,7 @@ public class Navigation {
     public void addFragment(Fragment fragment, boolean useBackStack) {
         // Открыть транзакцию
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.layout.fragment_card, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         if (useBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
