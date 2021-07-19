@@ -1,6 +1,7 @@
 package com.google.notes_7;
 
 public interface CardsSource {
+    CardsSource init(CardsSourceResponse cardsSourceResponse);
     CardData getCardData(int position);
     int size();
     void deleteCardData(int position);

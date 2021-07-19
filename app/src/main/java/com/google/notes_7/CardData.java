@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 
 public class CardData {
+    private String id;          // идентификатор
     public String title;       // заголовок
     public String description; // описание
     public int picture;        // изображение
@@ -70,5 +71,13 @@ public class CardData {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

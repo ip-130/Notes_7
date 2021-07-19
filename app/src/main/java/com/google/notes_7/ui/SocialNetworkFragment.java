@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.google.notes_7.CardData;
 import com.google.notes_7.CardsSource;
 import com.google.notes_7.CardsSourceImpl;
+import com.google.notes_7.CardsSourceResponse;
 import com.google.notes_7.MainActivity;
 import com.google.notes_7.Observer;
 import com.google.notes_7.Publisher;
@@ -40,16 +41,17 @@ public class SocialNetworkFragment extends Fragment {
     // признак, что при повторном открытии фрагмента
     // (возврате из фрагмента, добавляющего запись)
     // надо прыгнуть на последнюю запись
-    private boolean moveToLastPosition;
+    //    private boolean moveToLastPosition;
+    public boolean moveToFirstPosition;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // Получим источник данных для списка
-        // Поскольку onCreateView запускается каждый раз
-        // при возврате в фрагмент, данные надо создавать один раз
-        data = new CardsSourceImpl(getResources()).init();
-    }
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        // Получим источник данных для списка
+//        // Поскольку onCreateView запускается каждый раз
+//        // при возврате в фрагмент, данные надо создавать один раз
+//        data = new CardsSourceImpl(getResources()).init();
+//    }
 
     public static SocialNetworkFragment newInstance() {
         return new SocialNetworkFragment();
@@ -66,6 +68,13 @@ public class SocialNetworkFragment extends Fragment {
 //        data = new CardsSourceImpl(getResources()).init();
         initView(view);
         setHasOptionsMenu(true);
+        data = new CardsSourceFirebaseImpl().init(new CardsSourceResponse() {
+            @Override
+            public void initialized(CardsSource cardsData) {
+                adapter.notifyDataSetChanged();
+            }
+        });
+        adapter.setDataSource(data);
         return view;
     }
 
@@ -92,8 +101,8 @@ public class SocialNetworkFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_add:
+//        switch (item.getItemId()){
+//            case R.id.action_add:
 //                data.addCardData(new CardData("Заголовок " + data.size(),
 //                        "Описание " + data.size(),
 //                        R.drawable.nature1,
@@ -101,24 +110,25 @@ public class SocialNetworkFragment extends Fragment {
 //                adapter.notifyItemInserted(data.size() - 1);
 //                recyclerView.smoothScrollToPosition(data.size() - 1);
 //                recyclerView.scrollToPosition(data.size() - 1);
-                navigation.addFragment(CardFragment.newInstance(), true);
-                publisher.subscribe(new Observer() {
-                    @Override
-                    public void updateCardData(CardData cardData) {
-                        data.addCardData(cardData);
-                        adapter.notifyItemInserted(data.size() - 1);
-                        // это сигнал, чтобы вызванный метод onCreateView
-                        // перепрыгнул на конец списка
-                        moveToLastPosition = true;
-                    }
-                });
-                return true;
-            case R.id.action_clear:
-                data.clearCardData();
-                adapter.notifyDataSetChanged();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+//                navigation.addFragment(CardFragment.newInstance(), true);
+//                publisher.subscribe(new Observer() {
+//                    @Override
+//                    public void updateCardData(CardData cardData) {
+//                        data.addCardData(cardData);
+//                        adapter.notifyItemInserted(data.size() - 1);
+//                        // это сигнал, чтобы вызванный метод onCreateView
+//                        // перепрыгнул на конец списка
+//                        moveToLastPosition = true;
+//                    }
+//                });
+//                return true;
+//            case R.id.action_clear:
+//                data.clearCardData();
+//                adapter.notifyDataSetChanged();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+        return onItemSelected(item.getItemId()) || super.onOptionsItemSelected(item);
     }
 
     private void initView(View view) {
@@ -138,7 +148,7 @@ public class SocialNetworkFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         // Установим адаптер
-        adapter = new SocialNetworkAdapter(data, this);
+        adapter = new SocialNetworkAdapter(this);
         recyclerView.setAdapter(adapter);
 
         // Добавим разделитель карточек
@@ -151,9 +161,9 @@ public class SocialNetworkFragment extends Fragment {
         animator.setRemoveDuration(MY_DEFAULT_DURATION);
         recyclerView.setItemAnimator(animator);
 
-        if (moveToLastPosition){
-            recyclerView.smoothScrollToPosition(data.size() - 1);
-            moveToLastPosition = false;
+        if (moveToFirstPosition && data.size() > 0){
+            recyclerView.scrollToPosition(0);
+            moveToFirstPosition = false;
         }
 
 
@@ -176,29 +186,68 @@ public class SocialNetworkFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = adapter.getMenuPosition();
-        switch(item.getItemId()) {
-            case R.id.action_update:
-//                data.updateCardData(position,
-//                        new CardData("Кадр " + position,
-//                                data.getCardData(position).getDescription(),
-//                                data.getCardData(position).getPicture(),
-//                                false));
-//                adapter.notifyItemChanged(position);
-                navigation.addFragment(CardFragment.newInstance(data.getCardData(position)), true);
+//        int position = adapter.getMenuPosition();
+//        switch(item.getItemId()) {
+//            case R.id.action_update:
+////                data.updateCardData(position,
+////                        new CardData("Кадр " + position,
+////                                data.getCardData(position).getDescription(),
+////                                data.getCardData(position).getPicture(),
+////                                false));
+////                adapter.notifyItemChanged(position);
+//                navigation.addFragment(CardFragment.newInstance(data.getCardData(position)), true);
+//                publisher.subscribe(new Observer() {
+//                    @Override
+//                    public void updateCardData(CardData cardData) {
+//                        data.updateCardData(position, cardData);
+//                        adapter.notifyItemChanged(position);
+//                    }
+//                });
+//                return true;
+//            case R.id.action_delete:
+//                data.deleteCardData(position);
+//                adapter.notifyItemRemoved(position);
+//                return true;
+//        }
+        return onItemSelected(item.getItemId()) || super.onContextItemSelected(item);
+    }
+
+    private boolean onItemSelected(int menuItemId){
+        switch (menuItemId){
+            case R.id.action_add:
+                navigation.addFragment(CardFragment.newInstance(), true);
                 publisher.subscribe(new Observer() {
                     @Override
                     public void updateCardData(CardData cardData) {
-                        data.updateCardData(position, cardData);
-                        adapter.notifyItemChanged(position);
+                        data.addCardData(cardData);
+                        adapter.notifyItemInserted(data.size() - 1);
+                        // это сигнал, чтобы вызванный метод onCreateView
+                        // перепрыгнул на начало списка
+                        moveToFirstPosition = true;
+                    }
+                });
+                return true;
+            case R.id.action_update:
+                final int updatePosition = adapter.getMenuPosition();
+                navigation.addFragment(CardFragment.newInstance(data.getCardData(updatePosition)), true);
+                publisher.subscribe(new Observer() {
+                    @Override
+                    public void updateCardData(CardData cardData) {
+                        data.updateCardData(updatePosition, cardData);
+                        adapter.notifyItemChanged(updatePosition);
                     }
                 });
                 return true;
             case R.id.action_delete:
-                data.deleteCardData(position);
-                adapter.notifyItemRemoved(position);
+                int deletePosition = adapter.getMenuPosition();
+                data.deleteCardData(deletePosition);
+                adapter.notifyItemRemoved(deletePosition);
+                return true;
+            case R.id.action_clear:
+                data.clearCardData();
+                adapter.notifyDataSetChanged();
                 return true;
         }
-        return super.onContextItemSelected(item);
+        return false;
     }
 }
