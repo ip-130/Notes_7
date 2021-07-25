@@ -13,6 +13,7 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
     private static final android.R.attr R = null ;
     private String[] dataSource;
 
+
     // Передаём в конструктор источник данных
     // В нашем случае это массив, но может быть и запрос к БД
     public SocialNetworkAdapter(String[] dataSource) {
@@ -21,6 +22,7 @@ public class SocialNetworkAdapter extends RecyclerView.Adapter<SocialNetworkAdap
 
     // Создать новый элемент пользовательского интерфейса
     // Запускается менеджером
+
     @NonNull
     @Override
     public SocialNetworkAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
