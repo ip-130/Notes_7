@@ -16,7 +16,7 @@ public class CardsSourceImpl implements CardsSource {
         this.resources = resources;
     }
 
-    public CardsSource init(CardsSourceResponse cardsSourceResponse){
+    public CardsSourceImpl init(CardsSourceResponse cardsSourceResponse){
         // строки заголовков из ресурсов
         String[] titles = resources.getStringArray(R.array.titles);
         // строки описаний из ресурсов
@@ -31,7 +31,6 @@ public class CardsSourceImpl implements CardsSource {
         if (cardsSourceResponse != null){
             cardsSourceResponse.initialized(this);
         }
-
         return this;
     }
 

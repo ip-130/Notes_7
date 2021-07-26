@@ -21,8 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CardSourceFirebaseImpl implements CardsSource{
-}private static final String CARDS_COLLECTION = "cards";
+public class CardsSourceFirebaseImpl implements CardsSource {
+
+    private static final String CARDS_COLLECTION = "cards";
     private static final String TAG = "[CardsSourceFirebaseImpl]";
 
     // База данных Firestore
@@ -51,7 +52,7 @@ public class CardSourceFirebaseImpl implements CardsSource{
                                 cardsData.add(cardData);
                             }
                             Log.d(TAG, "success " + cardsData.size() + " qnt");
-                            cardsSourceResponse.initialized(CardsSourceFirebase.this);
+                            cardsSourceResponse.initialized(CardsSourceFirebaseImpl.this);
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
                         }
