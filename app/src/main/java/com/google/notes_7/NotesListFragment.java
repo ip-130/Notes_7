@@ -39,21 +39,32 @@ public class NotesListFragment extends Fragment {
         LinearLayout layoutView = (LinearLayout) view;
         String[] notes = getResources().getStringArray(R.array.note_name);
 
+        // При помощи этого объекта будем доставать элементы, спрятанные в item.xml
+        LayoutInflater ltInflater = getLayoutInflater();
+
         // В этом цикле создаем элемент TextView,
         // заполняем его значениями,
         // и добавляем на экран.
         // Кроме того, создаем обработку касания на элемент
         for (int i = 0; i < notes.length; i++) {
             String note = notes[i];
-            TextView tv = new TextView(getContext());
+//            TextView tv = new TextView(getContext());
+//            tv.setText(note);
+//            tv.setTextSize(30);
+//            layoutView.addView(tv);
+
+            // Достаём элемент из item.xml
+            View item = ltInflater.inflate(R.layout.item, layoutView, false);
+            // Находим в этом элементе TextView
+            TextView tv = item.findViewById(R.id.textView);
             tv.setText(note);
-            tv.setTextSize(30);
-            layoutView.addView(tv);
+            layoutView.addView(item);
+
             final int fi = i;
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //, getResources().getStringArray(R.array.note_name)[fi]
+                    getResources().getStringArray(R.array.note_name);
                     ((MainActivity)getActivity()).currentNote = new Note(fi);
                     showNoteDescription(((MainActivity)getActivity()).currentNote);
                 }

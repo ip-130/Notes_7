@@ -18,4 +18,9 @@
         <item>Описание заметки 6</item>
         <item>Описание заметки 7</item>
     </string-array>
+    <string-array name="titles">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+    </string-array>
 </resources>
